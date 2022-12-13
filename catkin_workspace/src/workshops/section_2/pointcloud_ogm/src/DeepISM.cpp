@@ -147,8 +147,8 @@ void DeepISM::tensor_to_grid_map(const float* prediction, grid_map::GridMap& gri
       auto& occupancy_color = grid_map.at("occupancy_color", grid_map::Index(row, col));
 
       const auto& S = (1 + evidence_occupied) + (1 + evidence_free);
-      m_occupied = evidence_occupied;
-      m_free = evidence_free;
+      m_occupied = evidence_occupied / S; 
+      m_free = evidence_free / S ;
 
       // create occupancy color for visualization (m_occupied = red, m_free = green)
       grid_map::colorVectorToValue(Eigen::Vector3f(m_occupied, m_free, 0), occupancy_color);

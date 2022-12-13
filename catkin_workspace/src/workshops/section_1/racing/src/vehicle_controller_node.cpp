@@ -38,7 +38,7 @@ VehicleController *vehicle_controller = nullptr;
 void callbackLaserSensor(const sensor_msgs::LaserScanPtr &msg) {
   // START TASK 2 CODE
 
-
+  ROS_INFO("Lidar Distances = %f , %f , %f", msg->ranges[0], msg->ranges[1], msg->ranges[2]);
 
   // END TASK 2 CODE
 
@@ -77,6 +77,7 @@ int main(int argc, char* argv[]) {
   std::string subscribe_topic_sensors;
   std::string publish_topic_actuators;
 
+
   // Write publish and subscribe topics from parameter server into local variables
   node_handle.getParam("vehicle/sensor_topic", subscribe_topic_sensors);
   node_handle.getParam("vehicle/actuator_topic", publish_topic_actuators);
@@ -97,10 +98,13 @@ int main(int argc, char* argv[]) {
   ROS_INFO("Vehicle controller is running...");
 
   // START TASK 1 CODE
+  
+  ros::Rate rate(50);
 
-
-  ros::spin();
-
+  while(true){
+	rate.sleep();
+  	ros::spinOnce();
+  }
 
   // END TASK 1 CODE
 

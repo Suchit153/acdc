@@ -8,9 +8,9 @@
     <remap from="~output" to="/points2_obstacles" />
     <rosparam>
       filter_limit_negative: False
-      filter_field_name: x
-      filter_limit_min: -50
-      filter_limit_max: 50
+      filter_field_name: z
+      filter_limit_min: -50   
+      filter_limit_max:  0
     </rosparam>
   </node>
 

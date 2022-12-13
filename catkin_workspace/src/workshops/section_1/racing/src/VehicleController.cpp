@@ -26,9 +26,9 @@
 void VehicleController::computeTargetVelocity() {
   // START CODE (improve the longitudinal control)
 
-  const float FACTOR = 2.0f;
-  const float FACTOR2 = 8.0f;
-  const float& front_distance = this->sensor_distances_[2];
+  const float FACTOR = 4.0f; // 2.0f
+  const float FACTOR2 = 2.0f; // 8.0f
+  const float& front_distance = this->sensor_distances_[2]; 
 
   // The larger the free space in the front, the greater the velocity can be.
   // The tanh function - tuned with parameters - is useful to implement such behavior smoothly.
@@ -40,13 +40,22 @@ void VehicleController::computeTargetVelocity() {
 void VehicleController::computeTargetSteeringAngle() {
   // START CODE (improve the lateral control)
 
-  const float FACTOR = 0.5f;
-
+  const float FACTOR = 0.3f;  //0.5f
+ 
   // Calculate relative lateral position on the road
   // You can use up to 5 lidar points for localization
-  const float& right_distance = this->sensor_distances_[0];
+  // const float& right_distance = this->sensor_distances_[0];
+  // const float& front_distance = this->sensor_distances_[2];
+  // const float& left_distance = this->sensor_distances_[4];
+  // float rightShift = left_distance - right_distance;
+
+  const float& right_distance_sensor_1 = this->sensor_distances_[0];
+  const float& right_distance_sensor_2 = this->sensor_distances_[1];
   const float& front_distance = this->sensor_distances_[2];
-  const float& left_distance = this->sensor_distances_[4];
+  const float& left_distance_sensor_1 = this->sensor_distances_[4];
+  const float& left_distance_sensor_2 = this->sensor_distances_[3];
+  float right_distance = (right_distance_sensor_1 + right_distance_sensor_2)/2;
+  float left_distance = (left_distance_sensor_1 + left_distance_sensor_2)/2;
   float rightShift = left_distance - right_distance;
 
   // The closer the cart is to the right border, the more it should steer to the left

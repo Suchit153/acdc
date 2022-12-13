@@ -126,7 +126,7 @@ class PCLSegmentation:
         
         # Task 2:
         # call publisher to publish the message "segmented_pcl_msg"
-
+        self.pub_pcl.publish(segmented_pcl_msg)
 
         ### END TASK 2 CODE HERE ###
 
@@ -303,7 +303,7 @@ class PCLSegmentation:
         # Task 1:
         # create publisher for the segmented point cloud, publish on topic "/points2_segmented"
         # The publish type is the PointCloud2 data format
-
+        self.pub_pcl = rospy.Publisher('/points2_segmented', PointCloud2, queue_size=1)
 
         ### END TASK 1 CODE HERE ###
 
