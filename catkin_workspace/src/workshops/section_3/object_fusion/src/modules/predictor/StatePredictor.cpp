@@ -28,6 +28,19 @@ void StatePredictor::runSingleSensor()
 {
   /** START TASK 1 CODE HERE **/
 
+  Eigen::MatrixXf F = data_->F_const_ + data_->F_timevar_* data_->prediction_gap_in_seconds;
+  Eigen::MatrixXf Q = data_->Q_timevar_ * data_->prediction_gap_in_seconds;
+
+  for (auto &globalObject : data_->object_list_fused.objects) {
+    auto x_hat_G = IkaUtilities::getEigenStateVec(&globalObject); // estimated global state
+    x_hat_G = F * x_hat_G;
+    globalObject.P() = F * globalObject.P() * F.transpose() + Q;
+
+    
+    globalObject.header.stamp = data_->object_list_measured.header.stamp;
+  }
+  
+  data_->object_list_fused.header.stamp = data_->object_list_measured.header.stamp;
 
   /** END TASK 1 CODE HERE **/
 }
